@@ -1,0 +1,32 @@
+---
+title: "pie"
+output: html_document
+date: "2022-24-10"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup}
+setwd("~/Downloads/kokako-viral-family-estimates-master")
+data <- read.csv("./normalisedpiechart.csv")
+  
+library(ggplot2)
+library(dplyr)
+  
+k1 <- slice(data, 3)[,2:37]
+k1_zero <- k1[, colSums(k1 != 0) > 0]
+k1_matrix_transposed <- as.data.frame(t(k1_zero))
+headers <- names(k1_zero)
+  
+k1_d <- as.list(t(k1_zero))
+  
+k1_data <- data.frame("Family"=headers, "value"=t(k1_zero))
+```
+
+```{r pie}
+  
+ggplot(k1_data, aes(x="", y=value, fill=Family)) +
+  geom_bar(stat="identity", width=1, color="white") +
+  coord_polar("y", start=0) +
+  theme_void()
+```
