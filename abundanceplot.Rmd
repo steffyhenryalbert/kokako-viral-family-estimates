@@ -7,13 +7,11 @@ editor_options:
 ---
 
 ```{r setup}
-data <- read.csv("abundance.csv")
-install.packages("ggplot2")
+library(readr)
+data <- read_csv("finalabudnance.csv")
 library(ggplot2)
 library(reshape2)
-library(log_trans)
 ```
-
 
 ```{r plot}
 melted_data = melt(data, id = "Library")
@@ -26,14 +24,10 @@ melted_data = melt(data, na.rm = FALSE, id = "Library")
 ggplot (melted_data, aes(fill=variable, y =value, x=Library)) +
   geom_bar(position ="fill", stat="identity") +
   scale_y_log10()
-
 ```
 
-
-
 ```{r reads}
-reads <- read_csv("Desktop/kōkako/rabundance/reads.csv")
+reads <- read_csv("reads.csv")
 ggplot(reads, aes(x=Library, y=`Paired end reads`)) +
   geom_bar(stat="identity")
 ```
-
